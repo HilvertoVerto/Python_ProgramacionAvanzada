@@ -176,6 +176,103 @@ class PersonajePredictor:
 
         return mejor_caracteristica
 
+    def calcular_ganancia_binaria(
+        self,
+        personajes_candidatos: List[Dict[str, Any]],
+        caracteristica: str,
+        valor: str
+    ) -> float:
+        """
+        Calcula la ganancia de información de una pregunta binaria
+
+        Args:
+            personajes_candidatos: Lista de personajes candidatos
+            caracteristica: Característica a preguntar
+            valor: Valor específico a preguntar
+
+        Returns:
+            Ganancia de información
+        """
+        if not personajes_candidatos:
+            return 0.0
+
+        entropia_inicial = self.calcular_entropia(personajes_candidatos)
+
+        # Dividir en dos grupos: los que tienen el valor y los que no
+        grupo_si = []
+        grupo_no = []
+
+        for personaje in personajes_candidatos:
+            valor_personaje = personaje.get('caracteristicas', {}).get(caracteristica)
+
+            if valor_personaje is None:
+                grupo_no.append(personaje)
+                continue
+
+            valor_personaje_str = str(valor_personaje).lower().strip()
+
+            if valor_personaje_str == valor.lower().strip():
+                grupo_si.append(personaje)
+            else:
+                grupo_no.append(personaje)
+
+        # Calcular entropía ponderada
+        total = len(personajes_candidatos)
+        entropia_ponderada = 0.0
+
+        if grupo_si:
+            peso_si = len(grupo_si) / total
+            entropia_ponderada += peso_si * self.calcular_entropia(grupo_si)
+
+        if grupo_no:
+            peso_no = len(grupo_no) / total
+            entropia_ponderada += peso_no * self.calcular_entropia(grupo_no)
+
+        return entropia_inicial - entropia_ponderada
+
+    def seleccionar_mejor_pregunta_binaria(
+        self,
+        personajes_candidatos: List[Dict[str, Any]],
+        preguntas_realizadas: Set[Tuple[str, str]]
+    ) -> Optional[Tuple[str, str]]:
+        """
+        Selecciona la mejor pregunta binaria basándose en ganancia de información
+
+        Args:
+            personajes_candidatos: Personajes que aún son candidatos
+            preguntas_realizadas: Set de tuplas (caracteristica, valor) ya preguntadas
+
+        Returns:
+            Tupla (caracteristica, valor) para la mejor pregunta binaria, o None
+        """
+        if not personajes_candidatos:
+            return None
+
+        mejor_pregunta = None
+        mejor_ganancia = -1.0
+
+        # Evaluar todas las combinaciones posibles de característica-valor
+        for caracteristica in self.caracteristicas_disponibles.keys():
+            # Obtener valores posibles para esta característica en los candidatos actuales
+            valores = self.obtener_valores_posibles(caracteristica, personajes_candidatos)
+
+            for valor in valores:
+                # Saltar si esta pregunta ya fue realizada
+                if (caracteristica, valor) in preguntas_realizadas:
+                    continue
+
+                ganancia = self.calcular_ganancia_binaria(
+                    personajes_candidatos,
+                    caracteristica,
+                    valor
+                )
+
+                if ganancia > mejor_ganancia:
+                    mejor_ganancia = ganancia
+                    mejor_pregunta = (caracteristica, valor)
+
+        return mejor_pregunta
+
     def filtrar_personajes(
         self,
         personajes_candidatos: List[Dict[str, Any]],
@@ -206,6 +303,47 @@ class PersonajePredictor:
             valor_personaje_str = str(valor_personaje).lower().strip()
 
             if valor_personaje_str == valor_usuario:
+                personajes_filtrados.append(personaje)
+
+        return personajes_filtrados
+
+    def filtrar_personajes_binario(
+        self,
+        personajes_candidatos: List[Dict[str, Any]],
+        caracteristica: str,
+        valor: str,
+        respuesta_binaria: bool
+    ) -> List[Dict[str, Any]]:
+        """
+        Filtra personajes según una respuesta binaria (sí/no)
+
+        Args:
+            personajes_candidatos: Lista de personajes candidatos
+            caracteristica: Característica preguntada
+            valor: Valor específico preguntado
+            respuesta_binaria: True para sí, False para no
+
+        Returns:
+            Lista filtrada de personajes
+        """
+        valor = valor.lower().strip()
+        personajes_filtrados = []
+
+        for personaje in personajes_candidatos:
+            valor_personaje = personaje.get('caracteristicas', {}).get(caracteristica)
+
+            if valor_personaje is None:
+                # Si no tiene la característica, se considera "no"
+                if not respuesta_binaria:
+                    personajes_filtrados.append(personaje)
+                continue
+
+            valor_personaje_str = str(valor_personaje).lower().strip()
+            tiene_valor = (valor_personaje_str == valor)
+
+            # Si respuesta es sí y el personaje tiene el valor, o
+            # si respuesta es no y el personaje NO tiene el valor
+            if tiene_valor == respuesta_binaria:
                 personajes_filtrados.append(personaje)
 
         return personajes_filtrados

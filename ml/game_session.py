@@ -1,7 +1,7 @@
 """
 Módulo para gestionar sesiones de juego
 """
-from typing import Optional, List, Dict, Any, Set
+from typing import Optional, List, Dict, Any, Set, Tuple
 from ml.predictor import PersonajePredictor
 
 
@@ -17,8 +17,8 @@ class GameSession:
         """
         self.predictor = predictor
         self.personajes_candidatos: List[Dict[str, Any]] = []
-        self.caracteristicas_preguntadas: Set[str] = set()
-        self.historial_preguntas: List[Dict[str, str]] = []
+        self.preguntas_realizadas: Set[Tuple[str, str]] = set()
+        self.historial_preguntas: List[Dict[str, Any]] = []
         self.intentos_adivinanza = 0
         self.max_intentos_adivinanza = 3
         self.reiniciar()
@@ -26,16 +26,16 @@ class GameSession:
     def reiniciar(self):
         """Reinicia la sesión para un nuevo juego"""
         self.personajes_candidatos = self.predictor.personajes.copy()
-        self.caracteristicas_preguntadas.clear()
+        self.preguntas_realizadas.clear()
         self.historial_preguntas.clear()
         self.intentos_adivinanza = 0
 
     def obtener_siguiente_pregunta(self) -> Optional[Dict[str, Any]]:
         """
-        Obtiene la siguiente pregunta a realizar
+        Obtiene la siguiente pregunta binaria a realizar
 
         Returns:
-            Diccionario con la pregunta y opciones, o None si no hay más preguntas
+            Diccionario con la pregunta binaria, o None si no hay más preguntas
         """
         # Si ya no quedan candidatos, no hay más preguntas
         if not self.personajes_candidatos:
@@ -45,66 +45,65 @@ class GameSession:
         if len(self.personajes_candidatos) == 1:
             return None
 
-        # Seleccionar la mejor característica para preguntar
-        caracteristica = self.predictor.seleccionar_mejor_pregunta(
+        # Seleccionar la mejor pregunta binaria
+        pregunta_binaria = self.predictor.seleccionar_mejor_pregunta_binaria(
             self.personajes_candidatos,
-            self.caracteristicas_preguntadas
+            self.preguntas_realizadas
         )
 
-        if caracteristica is None:
+        if pregunta_binaria is None:
             return None
 
-        # Obtener valores posibles para esta característica
-        valores_posibles = self.predictor.obtener_valores_posibles(
-            caracteristica,
-            self.personajes_candidatos
-        )
+        caracteristica, valor = pregunta_binaria
 
         # Formatear la pregunta
-        pregunta_formateada = self._formatear_pregunta(caracteristica)
+        pregunta_formateada = self._formatear_pregunta_binaria(caracteristica, valor)
 
         return {
             'caracteristica': caracteristica,
-            'pregunta': pregunta_formateada,
-            'opciones': valores_posibles
+            'valor': valor,
+            'pregunta': pregunta_formateada
         }
 
-    def _formatear_pregunta(self, caracteristica: str) -> str:
+    def _formatear_pregunta_binaria(self, caracteristica: str, valor: str) -> str:
         """
-        Formatea una característica como pregunta legible
-        Solo convierte el nombre de la característica, sin formato rígido
+        Formatea una pregunta binaria
 
         Args:
             caracteristica: Nombre de la característica
+            valor: Valor a preguntar
 
         Returns:
-            Característica formateada
+            Pregunta formateada
         """
         # Convertir snake_case a palabras separadas
-        pregunta = caracteristica.replace('_', ' ')
+        caracteristica_formateada = caracteristica.replace('_', ' ')
 
-        return pregunta
+        return f"{caracteristica_formateada}: {valor}"
 
-    def procesar_respuesta(self, caracteristica: str, valor: str):
+    def procesar_respuesta(self, caracteristica: str, valor: str, respuesta_binaria: bool):
         """
-        Procesa la respuesta del usuario a una pregunta
+        Procesa la respuesta binaria del usuario a una pregunta
 
         Args:
             caracteristica: Característica preguntada
-            valor: Respuesta del usuario
+            valor: Valor específico preguntado
+            respuesta_binaria: True para sí (1), False para no (0)
         """
         # Registrar pregunta
-        self.caracteristicas_preguntadas.add(caracteristica)
+        self.preguntas_realizadas.add((caracteristica, valor))
         self.historial_preguntas.append({
             'caracteristica': caracteristica,
-            'valor': valor
+            'valor': valor,
+            'respuesta': respuesta_binaria
         })
 
         # Filtrar personajes candidatos
-        self.personajes_candidatos = self.predictor.filtrar_personajes(
+        self.personajes_candidatos = self.predictor.filtrar_personajes_binario(
             self.personajes_candidatos,
             caracteristica,
-            valor
+            valor,
+            respuesta_binaria
         )
 
     def intentar_adivinanza(self) -> Optional[Dict[str, Any]]:
@@ -149,9 +148,9 @@ class GameSession:
             return True
 
         # Verificar si quedan preguntas útiles
-        siguiente_pregunta = self.predictor.seleccionar_mejor_pregunta(
+        siguiente_pregunta = self.predictor.seleccionar_mejor_pregunta_binaria(
             self.personajes_candidatos,
-            self.caracteristicas_preguntadas
+            self.preguntas_realizadas
         )
 
         if siguiente_pregunta is None:
