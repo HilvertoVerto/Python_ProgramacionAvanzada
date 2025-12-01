@@ -1,0 +1,80 @@
+{
+  "personajes": [
+    {
+      "id": 1,
+      "nombre": "Monika",
+      "caracteristicas": {
+        "color_pelo": "castaño",
+        "color_ojos": "verde esmeralda",
+        "edad": 18,
+        "juego_origen": "Doki Doki Literature Club",
+        "altura": "media-alta",
+        "largo_pelo": "largo",
+        "accesorio_pelo": "lazo blanco",
+        "personalidad": "carismática",
+        "rol_club": "presidenta",
+        "estilo_poesia": "reflexivo",
+        "rasgo_distintivo": "consciente de ser personaje"
+      }
+    },
+    {
+      "id": 2,
+      "nombre": "Sayori",
+      "caracteristicas": {
+        "color_pelo": "coral",
+        "color_ojos": "azul claro",
+        "edad": 18,
+        "juego_origen": "Doki Doki Literature Club",
+        "altura": "media-baja",
+        "largo_pelo": "corto",
+        "accesorio_pelo": "lazo rojo grande",
+        "personalidad": "alegre",
+        "rol_club": "vicepresidenta",
+        "estilo_poesia": "emocional",
+        "rasgo_distintivo": "mejor amiga de la infancia"
+      }
+    },
+    {
+      "id": 3,
+      "nombre": "Natsuki",
+      "caracteristicas": {
+        "color_pelo": "rosa",
+        "color_ojos": "rosa",
+        "edad": 18,
+        "juego_origen": "Doki Doki Literature Club",
+        "altura": "baja",
+        "largo_pelo": "corto",
+        "accesorio_pelo": "horquillas rojas",
+        "personalidad": "tsundere",
+        "rol_club": "miembro",
+        "estilo_poesia": "simple y directo",
+        "rasgo_distintivo": "le gusta el manga",
+        "apariencia": "infantil"
+      }
+    },
+    {
+      "id": 4,
+      "nombre": "Yuri",
+      "caracteristicas": {
+        "color_pelo": "morado oscuro",
+        "color_ojos": "morado",
+        "edad": 18,
+        "juego_origen": "Doki Doki Literature Club",
+        "altura": "alta",
+        "largo_pelo": "muy largo",
+        "accesorio_pelo": "ninguno",
+        "personalidad": "tímida",
+        "rol_club": "miembro",
+        "estilo_poesia": "complejo y elaborado",
+        "rasgo_distintivo": "le gusta el horror psicológico",
+        "apariencia": "elegante"
+      }
+    }
+  ],
+  "metadata": {
+    "version": "1.0",
+    "fecha_creacion": "2025-12-01",
+    "total_personajes": 4,
+    "juegos_incluidos": ["Doki Doki Literature Club"]
+  }
+}
