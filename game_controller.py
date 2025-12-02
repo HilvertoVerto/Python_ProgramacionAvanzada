@@ -85,9 +85,12 @@ class GameController:
         while True:
             # Verificar si debería intentar adivinar
             if self.sesion.puede_intentar_adivinar():
-                resultado_adivinanza = self._intentar_adivinanza()
+                resultado_adivinanza, nombre_adivinado = self._intentar_adivinanza()
 
                 if resultado_adivinanza == "correcto":
+                    # Guardar el nombre del personaje adivinado
+                    personaje_objetivo_nombre = nombre_adivinado
+
                     # Registrar partida exitosa
                     if personaje_objetivo_nombre:
                         personaje = self.db.obtener_personaje_por_nombre(personaje_objetivo_nombre)
@@ -130,16 +133,18 @@ class GameController:
             pregunta = pregunta_data['pregunta']
 
             print(f"\n{pregunta}?")
-            print("0 = No | 1 = Si")
+            print("Responde: s/n")
 
-            respuesta_str = input("Tu respuesta: ").strip()
+            respuesta_str = input("Tu respuesta: ").strip().lower()
 
-            # Validar respuesta
-            if respuesta_str not in ['0', '1']:
-                print("[ERROR] Respuesta invalida. Debe ser 0 (No) o 1 (Si)")
+            # Validar respuesta - aceptar múltiples formatos
+            if respuesta_str in ['0', 'no', 'n']:
+                respuesta_binaria = False
+            elif respuesta_str in ['1', 'si', 'sí', 's']:
+                respuesta_binaria = True
+            else:
+                print("[ERROR] Respuesta invalida. Debe ser: 0/1, si/no, s/n")
                 continue
-
-            respuesta_binaria = (respuesta_str == '1')
 
             # Registrar pregunta
             preguntas_realizadas.append({
@@ -151,21 +156,16 @@ class GameController:
             # Procesar respuesta
             self.sesion.procesar_respuesta(caracteristica, valor, respuesta_binaria)
 
-            # Mostrar progreso
-            candidatos = self.sesion.obtener_candidatos_actuales()
-            confianza = self.sesion.obtener_confianza()
-
-            print(f"\n[DEBUG] Candidatos restantes: {len(candidatos)}")
-            print(f"[DEBUG] Confianza: {confianza:.2%}")
-
         print("\n" + "=" * 70)
 
-    def _intentar_adivinanza(self) -> str:
+    def _intentar_adivinanza(self) -> tuple:
         """
         Intenta adivinar el personaje
 
         Returns:
-            'correcto', 'incorrecto', 'limite_alcanzado', 'continuar'
+            Tupla (resultado, nombre_personaje)
+            resultado: 'correcto', 'incorrecto', 'limite_alcanzado', 'continuar'
+            nombre_personaje: Nombre del personaje adivinado (o None)
         """
         print("\n" + "-" * 70)
         print("MOMENTO DE ADIVINAR")
@@ -175,22 +175,22 @@ class GameController:
 
         if not prediccion:
             print("\n[ERROR] No se pudo hacer una prediccion")
-            return "continuar"
+            return ("continuar", None)
 
         print(f"\nCreo que estas pensando en: {prediccion['nombre']}")
         respuesta = input("Es correcto? (s/n): ").strip().lower()
 
         if respuesta == 's':
             print("\n[OK] Adivine correctamente!")
-            return "correcto"
+            return ("correcto", prediccion['nombre'])
         else:
             print(f"\n[INFO] Intento {self.sesion.intentos_adivinanza} de 3")
 
             if self.sesion.puede_agregar_personaje():
-                return "limite_alcanzado"
+                return ("limite_alcanzado", None)
             else:
                 print("Continuare preguntando...")
-                return "continuar"
+                return ("continuar", None)
 
     def _manejar_limite_intentos(self) -> Optional[str]:
         """

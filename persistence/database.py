@@ -271,10 +271,39 @@ class DatabaseManager:
 
         Returns:
             Lista de personajes que cumplen el criterio
+
+        Note:
+            Valida que la clave no contenga caracteres peligrosos y usa
+            búsqueda Python para mayor seguridad si la clave es compleja.
         """
+        import re
         cursor = self.connection.cursor()
 
-        # Usar json_extract de SQLite para buscar en el JSON
+        # Validar que la clave solo contenga caracteres seguros (alfanuméricos y guiones bajos)
+        if not re.match(r'^[a-zA-Z0-9_]+$', clave):
+            # Si la clave tiene caracteres especiales, usar búsqueda en Python
+            # para evitar problemas con json_extract
+            cursor.execute("""
+                SELECT id, nombre, caracteristicas, fecha_creacion, fecha_modificacion
+                FROM personajes
+                ORDER BY nombre
+            """)
+
+            personajes = []
+            for row in cursor.fetchall():
+                caracteristicas = json.loads(row['caracteristicas'])
+                # Buscar la clave de forma segura
+                if caracteristicas.get(clave) == valor:
+                    personajes.append({
+                        'id': row['id'],
+                        'nombre': row['nombre'],
+                        'caracteristicas': caracteristicas,
+                        'fecha_creacion': row['fecha_creacion'],
+                        'fecha_modificacion': row['fecha_modificacion']
+                    })
+            return personajes
+
+        # Si la clave es segura, usar json_extract de SQLite (más eficiente)
         cursor.execute("""
             SELECT id, nombre, caracteristicas, fecha_creacion, fecha_modificacion
             FROM personajes

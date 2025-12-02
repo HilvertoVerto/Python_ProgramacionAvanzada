@@ -325,24 +325,33 @@ class PersonajePredictor:
 
         Returns:
             Lista filtrada de personajes
+
+        Note:
+            Los personajes que no tienen la característica se tratan como
+            si no tuvieran ese valor específico (respuesta "no").
         """
         valor = valor.lower().strip()
         personajes_filtrados = []
 
         for personaje in personajes_candidatos:
-            valor_personaje = personaje.get('caracteristicas', {}).get(caracteristica)
+            caracteristicas = personaje.get('caracteristicas', {})
+            valor_personaje = caracteristicas.get(caracteristica)
 
+            # Manejo explícito de valores None o características faltantes
             if valor_personaje is None:
-                # Si no tiene la característica, se considera "no"
+                # Si no tiene la característica, se interpreta como "no tiene ese valor"
+                # Solo se incluye si la respuesta del usuario fue "no"
                 if not respuesta_binaria:
                     personajes_filtrados.append(personaje)
                 continue
 
+            # Convertir a string y normalizar
             valor_personaje_str = str(valor_personaje).lower().strip()
             tiene_valor = (valor_personaje_str == valor)
 
-            # Si respuesta es sí y el personaje tiene el valor, o
-            # si respuesta es no y el personaje NO tiene el valor
+            # Incluir el personaje si:
+            # - respuesta es "sí" y el personaje tiene el valor, O
+            # - respuesta es "no" y el personaje NO tiene el valor
             if tiene_valor == respuesta_binaria:
                 personajes_filtrados.append(personaje)
 
