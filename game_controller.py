@@ -195,7 +195,7 @@ class GameController:
     def _manejar_limite_intentos(self) -> Optional[str]:
         """
         Maneja el caso cuando se alcanza el límite de intentos
-        Permite al usuario agregar un nuevo personaje
+        Pregunta por el personaje pensado y permite agregarlo si no existe
 
         Returns:
             Nombre del personaje pensado, o None
@@ -205,34 +205,38 @@ class GameController:
         print("=" * 70)
         print("\nNo pude adivinar el personaje despues de 3 intentos.")
 
-        agregar = input("\nQuieres agregar el personaje al sistema? (s/n): ").strip().lower()
-
-        if agregar != 's':
-            print("\n[INFO] No se agrego ningun personaje")
-            return None
-
-        # Solicitar información del nuevo personaje
-        print("\n" + "-" * 70)
-        print("AGREGAR NUEVO PERSONAJE")
-        print("-" * 70)
-
-        nombre = input("\nNombre del personaje: ").strip()
+        # SIEMPRE preguntar en qué personaje estaba pensando
+        nombre = input("\nEn que personaje estabas pensando? ").strip()
 
         if not nombre:
             print("[ERROR] El nombre no puede estar vacio")
             return None
 
-        # Verificar si ya existe
+        # Verificar si el personaje ya existe en la base de datos
         existente = self.db.obtener_personaje_por_nombre(nombre)
+
         if existente:
-            print(f"[ERROR] El personaje '{nombre}' ya existe en la base de datos")
+            print(f"\n[INFO] El personaje '{nombre}' ya existe en la base de datos")
+            print("[INFO] La partida sera registrada como fallida")
             return nombre
 
-        # Obtener características del personaje basándose en las preguntas realizadas
+        # Si NO existe, preguntar si quiere agregarlo
+        print(f"\n[INFO] El personaje '{nombre}' no esta en la base de datos")
+        agregar = input("Quieres agregarlo al sistema? (s/n): ").strip().lower()
+
+        if agregar != 's':
+            print("\n[INFO] No se agrego el personaje")
+            return nombre
+
+        # Solicitar características del nuevo personaje
+        print("\n" + "-" * 70)
+        print("AGREGAR NUEVO PERSONAJE")
+        print("-" * 70)
+
         caracteristicas = {}
 
-        print("\nAhora necesito las caracteristicas del personaje.")
-        print("Responde basandote en las preguntas que hice:")
+        print("\nAhora necesito todas las caracteristicas del personaje.")
+        print("Responde basandote en el personaje:")
 
         # Obtener todas las características disponibles
         todas_caracteristicas = self.predictor.obtener_caracteristicas()
@@ -247,13 +251,15 @@ class GameController:
             if valor:
                 caracteristicas[caracteristica] = valor
 
-        # Guardar en la base de datos
+        # Guardar en la base de datos SQLite
         try:
             personaje_id = self.db.agregar_personaje(nombre, caracteristicas)
             print(f"\n[OK] Personaje '{nombre}' agregado exitosamente (ID: {personaje_id})")
 
             # Exportar a JSON para mantener sincronización
+            print("[INFO] Sincronizando con archivo JSON...")
             self.db.exportar_a_json("data/personajes.json")
+            print("[OK] Archivo JSON actualizado")
 
             # Recargar predictor para incluir el nuevo personaje
             self.predictor.cargar_datos()
@@ -263,7 +269,7 @@ class GameController:
 
         except Exception as e:
             print(f"[ERROR] No se pudo agregar el personaje: {e}")
-            return None
+            return nombre
 
     def _registrar_partida(
         self,

@@ -1,165 +1,21 @@
 {
   "personajes": [
     {
-      "id": 1,
-      "nombre": "Monika",
+      "id": 12,
+      "nombre": "Bulma",
       "caracteristicas": {
-        "color_pelo": "castaño",
-        "color_ojos": "verde esmeralda",
-        "edad": 18,
-        "origen": "Doki Doki Literature Club",
-        "altura": "media-alta",
-        "largo_pelo": "largo",
-        "accesorio_pelo": "lazo blanco",
-        "personalidad": "carismática",
-        "rol": "lider",
-        "especialidad": "escritura reflexiva",
-        "rasgo_distintivo": "consciente de ser personaje",
-        "apariencia": "elegante"
-      }
-    },
-    {
-      "id": 2,
-      "nombre": "Sayori",
-      "caracteristicas": {
-        "color_pelo": "coral",
-        "color_ojos": "azul claro",
-        "edad": 18,
-        "origen": "Doki Doki Literature Club",
-        "altura": "media-baja",
-        "largo_pelo": "corto",
-        "accesorio_pelo": "lazo rojo grande",
-        "personalidad": "alegre",
-        "rol": "vice-lider",
-        "especialidad": "escritura emocional",
-        "rasgo_distintivo": "mejor amiga de la infancia",
-        "apariencia": "tierna"
-      }
-    },
-    {
-      "id": 3,
-      "nombre": "Natsuki",
-      "caracteristicas": {
-        "color_pelo": "rosa",
-        "color_ojos": "rosa",
-        "edad": 18,
-        "origen": "Doki Doki Literature Club",
-        "altura": "baja",
-        "largo_pelo": "corto",
-        "accesorio_pelo": "horquillas rojas",
-        "personalidad": "tsundere",
-        "rol": "miembro",
-        "especialidad": "escritura directa",
-        "rasgo_distintivo": "le gusta el manga",
-        "apariencia": "infantil"
-      }
-    },
-    {
-      "id": 4,
-      "nombre": "Yuri",
-      "caracteristicas": {
-        "color_pelo": "morado oscuro",
-        "color_ojos": "morado",
-        "edad": 18,
-        "origen": "Doki Doki Literature Club",
-        "altura": "alta",
-        "largo_pelo": "muy largo",
-        "accesorio_pelo": "ninguno",
-        "personalidad": "tímida",
-        "rol": "miembro",
-        "especialidad": "escritura compleja",
-        "rasgo_distintivo": "le gusta el horror psicológico",
-        "apariencia": "elegante"
-      }
-    },
-    {
-      "id": 5,
-      "nombre": "Goku",
-      "caracteristicas": {
-        "color_pelo": "negro",
-        "color_ojos": "negro",
-        "edad": 35,
-        "origen": "Dragon Ball Z",
-        "altura": "alta",
-        "largo_pelo": "corto",
-        "accesorio_pelo": "ninguno",
-        "personalidad": "alegre",
-        "rol": "guerrero",
-        "especialidad": "kamehameha",
-        "rasgo_distintivo": "puede transformarse en super saiyan",
-        "apariencia": "musculoso"
-      }
-    },
-    {
-      "id": 6,
-      "nombre": "Vegeta",
-      "caracteristicas": {
-        "color_pelo": "negro",
-        "color_ojos": "negro",
-        "edad": 40,
-        "origen": "Dragon Ball Z",
-        "altura": "media-alta",
-        "largo_pelo": "corto",
-        "accesorio_pelo": "ninguno",
-        "personalidad": "orgulloso",
-        "rol": "guerrero",
-        "especialidad": "final flash",
-        "rasgo_distintivo": "principe de los saiyans",
-        "apariencia": "musculoso"
-      }
-    },
-    {
-      "id": 7,
-      "nombre": "Gohan",
-      "caracteristicas": {
-        "color_pelo": "negro",
-        "color_ojos": "negro",
-        "edad": 16,
-        "origen": "Dragon Ball Z",
-        "altura": "media-alta",
-        "largo_pelo": "corto",
-        "accesorio_pelo": "ninguno",
-        "personalidad": "estudioso",
-        "rol": "guerrero",
-        "especialidad": "masenko",
-        "rasgo_distintivo": "hijo de goku",
-        "apariencia": "juvenil"
-      }
-    },
-    {
-      "id": 8,
-      "nombre": "Piccolo",
-      "caracteristicas": {
-        "color_pelo": "ninguno",
-        "color_ojos": "negro",
-        "edad": 25,
-        "origen": "Dragon Ball Z",
-        "altura": "muy alta",
-        "largo_pelo": "ninguno",
-        "accesorio_pelo": "turbante",
-        "personalidad": "serio",
-        "rol": "guerrero",
-        "especialidad": "makankosappo",
-        "rasgo_distintivo": "es un namekiano",
-        "apariencia": "verde"
-      }
-    },
-    {
-      "id": 9,
-      "nombre": "Trunks",
-      "caracteristicas": {
-        "color_pelo": "morado",
+        "color_pelo": "azul",
         "color_ojos": "azul",
-        "edad": 18,
+        "edad": 38,
         "origen": "Dragon Ball Z",
-        "altura": "alta",
-        "largo_pelo": "corto",
+        "altura": "media",
+        "largo_pelo": "largo",
         "accesorio_pelo": "ninguno",
-        "personalidad": "determinado",
-        "rol": "guerrero",
-        "especialidad": "espada",
-        "rasgo_distintivo": "viajero del tiempo",
-        "apariencia": "juvenil"
+        "personalidad": "inteligente",
+        "rol": "cientifico",
+        "especialidad": "invencion",
+        "rasgo_distintivo": "inventora genio",
+        "apariencia": "elegante"
       }
     },
     {
@@ -181,6 +37,42 @@
       }
     },
     {
+      "id": 7,
+      "nombre": "Gohan",
+      "caracteristicas": {
+        "color_pelo": "negro",
+        "color_ojos": "negro",
+        "edad": 16,
+        "origen": "Dragon Ball Z",
+        "altura": "media-alta",
+        "largo_pelo": "corto",
+        "accesorio_pelo": "ninguno",
+        "personalidad": "estudioso",
+        "rol": "guerrero",
+        "especialidad": "masenko",
+        "rasgo_distintivo": "hijo de goku",
+        "apariencia": "juvenil"
+      }
+    },
+    {
+      "id": 5,
+      "nombre": "Goku",
+      "caracteristicas": {
+        "color_pelo": "negro",
+        "color_ojos": "negro",
+        "edad": 35,
+        "origen": "Dragon Ball Z",
+        "altura": "alta",
+        "largo_pelo": "corto",
+        "accesorio_pelo": "ninguno",
+        "personalidad": "alegre",
+        "rol": "guerrero",
+        "especialidad": "kamehameha",
+        "rasgo_distintivo": "puede transformarse en super saiyan",
+        "apariencia": "musculoso"
+      }
+    },
+    {
       "id": 11,
       "nombre": "Krillin",
       "caracteristicas": {
@@ -199,32 +91,152 @@
       }
     },
     {
-      "id": 12,
-      "nombre": "Bulma",
+      "id": 13,
+      "nombre": "Megumin",
       "caracteristicas": {
-        "color_pelo": "azul",
-        "color_ojos": "azul",
-        "edad": 38,
-        "origen": "Dragon Ball Z",
-        "altura": "media",
+        "color_pelo": "negro",
+        "color_ojos": "rojo",
+        "origen": "konosuba",
+        "altura": "baja",
+        "largo_pelo": "corto",
+        "accesorio_pelo": "sombrero de mago",
+        "personalidad": "alegre",
+        "rol": "mago",
+        "especialidad": "explosiones",
+        "rasgo_distintivo": "le gustan las explosiones",
+        "apariencia": "juvenil"
+      }
+    },
+    {
+      "id": 1,
+      "nombre": "Monika",
+      "caracteristicas": {
+        "color_pelo": "castaño",
+        "color_ojos": "verde esmeralda",
+        "edad": 18,
+        "origen": "Doki Doki Literature Club",
+        "altura": "media-alta",
         "largo_pelo": "largo",
+        "accesorio_pelo": "lazo blanco",
+        "personalidad": "carismática",
+        "rol": "lider",
+        "especialidad": "escritura reflexiva",
+        "rasgo_distintivo": "consciente de ser personaje",
+        "apariencia": "elegante"
+      }
+    },
+    {
+      "id": 3,
+      "nombre": "Natsuki",
+      "caracteristicas": {
+        "color_pelo": "rosa",
+        "color_ojos": "rosa",
+        "edad": 18,
+        "origen": "Doki Doki Literature Club",
+        "altura": "baja",
+        "largo_pelo": "corto",
+        "accesorio_pelo": "horquillas rojas",
+        "personalidad": "tsundere",
+        "rol": "miembro",
+        "especialidad": "escritura directa",
+        "rasgo_distintivo": "le gusta el manga",
+        "apariencia": "infantil"
+      }
+    },
+    {
+      "id": 8,
+      "nombre": "Piccolo",
+      "caracteristicas": {
+        "color_pelo": "ninguno",
+        "color_ojos": "negro",
+        "edad": 25,
+        "origen": "Dragon Ball Z",
+        "altura": "muy alta",
+        "largo_pelo": "ninguno",
+        "accesorio_pelo": "turbante",
+        "personalidad": "serio",
+        "rol": "guerrero",
+        "especialidad": "makankosappo",
+        "rasgo_distintivo": "es un namekiano",
+        "apariencia": "verde"
+      }
+    },
+    {
+      "id": 2,
+      "nombre": "Sayori",
+      "caracteristicas": {
+        "color_pelo": "coral",
+        "color_ojos": "azul claro",
+        "edad": 18,
+        "origen": "Doki Doki Literature Club",
+        "altura": "media-baja",
+        "largo_pelo": "corto",
+        "accesorio_pelo": "lazo rojo grande",
+        "personalidad": "alegre",
+        "rol": "vice-lider",
+        "especialidad": "escritura emocional",
+        "rasgo_distintivo": "mejor amiga de la infancia",
+        "apariencia": "tierna"
+      }
+    },
+    {
+      "id": 9,
+      "nombre": "Trunks",
+      "caracteristicas": {
+        "color_pelo": "morado",
+        "color_ojos": "azul",
+        "edad": 18,
+        "origen": "Dragon Ball Z",
+        "altura": "alta",
+        "largo_pelo": "corto",
         "accesorio_pelo": "ninguno",
-        "personalidad": "inteligente",
-        "rol": "cientifico",
-        "especialidad": "invencion",
-        "rasgo_distintivo": "inventora genio",
+        "personalidad": "determinado",
+        "rol": "guerrero",
+        "especialidad": "espada",
+        "rasgo_distintivo": "viajero del tiempo",
+        "apariencia": "juvenil"
+      }
+    },
+    {
+      "id": 6,
+      "nombre": "Vegeta",
+      "caracteristicas": {
+        "color_pelo": "negro",
+        "color_ojos": "negro",
+        "edad": 40,
+        "origen": "Dragon Ball Z",
+        "altura": "media-alta",
+        "largo_pelo": "corto",
+        "accesorio_pelo": "ninguno",
+        "personalidad": "orgulloso",
+        "rol": "guerrero",
+        "especialidad": "final flash",
+        "rasgo_distintivo": "principe de los saiyans",
+        "apariencia": "musculoso"
+      }
+    },
+    {
+      "id": 4,
+      "nombre": "Yuri",
+      "caracteristicas": {
+        "color_pelo": "morado oscuro",
+        "color_ojos": "morado",
+        "edad": 18,
+        "origen": "Doki Doki Literature Club",
+        "altura": "alta",
+        "largo_pelo": "muy largo",
+        "accesorio_pelo": "ninguno",
+        "personalidad": "tímida",
+        "rol": "miembro",
+        "especialidad": "escritura compleja",
+        "rasgo_distintivo": "le gusta el horror psicológico",
         "apariencia": "elegante"
       }
     }
   ],
   "metadata": {
-    "version": "2.0",
-    "fecha_creacion": "2025-12-01",
-    "fecha_actualizacion": "2025-12-01",
-    "total_personajes": 12,
-    "series_incluidas": [
-      "Doki Doki Literature Club",
-      "Dragon Ball Z"
-    ]
+    "version": "1.0",
+    "fecha_exportacion": "2025-12-02T07:15:18.362638",
+    "total_personajes": 13
   }
 }
